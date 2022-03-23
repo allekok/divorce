@@ -1,0 +1,6 @@
+(begin
+	[[x || y] = [x ? x y]]
+	[[x && y] = [x ? y x]]
+	[(not x) = [x ? 0 1]]
+	[[x xor y] = [x ? (not y) y]]
+	[[x != y] = (not [x == y])])

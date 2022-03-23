@@ -1,0 +1,4 @@
+(load "library/logic.divo"
+      "library/data.divo"
+      "library/map.divo"
+      "library/math.divo")

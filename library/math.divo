@@ -1,0 +1,22 @@
+(begin
+	[[a > b] = (not [[a == b] || [a < b]])]
+	[(abs n) = [[n < 0] ? (- n) n]]
+	[{n ++} = [n + 1]]
+	[{n --} = [n - 1]]
+	[[n ** p] = [[p == 0] ? 1 [n * [n ** {p --}]]]]
+	[[m % n] = [[m < n] ? m [[m - n] % n]]]
+	[{n !} = [[n == 0] ? 1 [n * {{n --} !}]]]
+	[(fib n) = [[[n == 1] || [n == 2]] ?
+	      	   1
+		   [(fib [n - 1]) + (fib [n - 2])]]]
+	[(gcd m n) = [[m % n] ? (gcd n [m % n]) n]]
+	[(sqrt n) = (begin
+	       [e = 1e-10]
+      	       [(enough? g) = [(abs [n - [g * g]]) < e]]
+      	       [(improve g) = [[[n / g] + g] / 2]]
+      	       [(iter g) = [(enough? g) ?
+	      	      	   g
+			   (iter (improve g))]]
+	       (iter 1))]
+	[(odd? n) = (num-to-bool [n % 2])]
+	[(even? n) = (not (odd? n))])

@@ -1,0 +1,18 @@
+(begin
+	[. = [L -> L]]
+	[list = [L -> (begin
+	      [(_list i) = [[[L @ i] == nil] ?
+	      	      	   nil
+	      	  	   [[L @ i] . (_list {i ++})]]]
+	      (_list 0))]]
+	[(list_len L) = [[L == nil] ? 0 {(list_len (cdr L)) ++}]]
+	[(car p) = [p @ 0]]
+	[(cdr p) = [p @ 1]]
+	[stream = .]
+	[[s s@ i] = [[i == 0] ? s [(tail s) s@ {i --}]]]
+	[head = car]
+	[(tail s) = ((cdr s))]
+	[(bool-to-num b) = [b ? 1 0]]
+	[(bool-to-str b) = [b ? "t" "nil"]]
+	[(bool-to-sym b) = [b ? (' t) (' nil)]]
+	[(num-to-bool n) = [[n == 0] ? nil t]])

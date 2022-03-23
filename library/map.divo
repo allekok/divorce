@@ -1,0 +1,3 @@
+[[f // L] = [[L == nil] ?
+      	    nil
+	    [(f (car L)) . [f // (cdr L)]]]]

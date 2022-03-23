@@ -1,0 +1,4 @@
+(begin
+	[(int-from-stream n) = (stream n [() ->
+			       	       	 (int-from-stream {n ++})])]
+	[natural-numbers-stream = (int-from-stream 0)])

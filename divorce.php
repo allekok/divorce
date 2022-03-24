@@ -56,26 +56,25 @@ function tokenize(&$str) {
 			break;
 		$c = c($str);
 		if(is_special($c))
-			$tokens[] = $c;
-		elseif(is_quote($c)) {
-			$tokens[] = $c;
-			$tokens[] = take_string($str);
-			$tokens[] = $c;
-		} else {
-			$str = $c . $str;
+			$tokens[] = take($str);
+		elseif(is_quote($c))
+			array_push($tokens, $c, take_string($str), $c);
+		else
 			$tokens[] = take_atom($str);
-		}
 	}
 	return $tokens;
 }
-function c(&$str) {
-	$c = $str[0];
+function c($str) {
+	return $str[0];
+}
+function take(&$str) {
+	$c = c($str);
 	$str = substr($str, 1);
 	return $c;
 }
 function skip_spaces(&$str) {
-	while($str and is_space($str[0]))
-		c($str);
+	while($str and is_space(c($str)))
+		take($str);
 }
 function is_space($c) {
 	return in_array($c, [" ", "\n", "\t", "\r"]);
@@ -88,10 +87,11 @@ function is_quote($c) {
 }
 function take_string(&$str) {
 	$token = "";
-	while($str and $str[0] != "\"")
-		$token .= c($str);
+	take($str);
+	while($str and c($str) != "\"")
+		$token .= take($str);
 	if($str)
-		c($str);
+		take($str);
 	return $token;
 }
 function not_special($c) {
@@ -99,8 +99,8 @@ function not_special($c) {
 }
 function take_atom(&$str) {
 	$token = "";
-	while($str and not_special($str[0]))
-		$token .= c($str);
+	while($str and not_special(c($str)))
+		$token .= take($str);
 	return $token;
 }
 function read_list(&$tokens, $end) {
